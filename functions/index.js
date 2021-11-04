@@ -15,5 +15,6 @@ exports.toGoogle = functions.https.onRequest((request, response) => {
 
 // http callable function
 exports.sayHello = functions.https.onCall((data, context) => {
-  return "hello, bro";
+  const name = data.name;
+  return `hello, ${name}`;
 });
