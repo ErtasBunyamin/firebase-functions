@@ -20,22 +20,22 @@ exports.userDeleted = functions.auth.user().onDelete((user) => {
 
 // http callable function (adding a request)
 exports.addRequest = functions.https.onCall((data, context) => {
-  if(!context.auth) {
+  if (!context.auth) {
     throw new functions.https.HttpsError(
       "unauthenticated",
       "only authenticated users can add requests"
     );
   }
-	if(data.text.length > 30) {
-		throw new functions.https.HttpsError(
+  if (data.text.length > 30) {
+    throw new functions.https.HttpsError(
       "invalid-argument",
       "request must be no more than 30 characters long"
     );
-	}
-	return admin.firestore().collection("requests").add({
-		text: data.text,
-		upvotes: 0,
-	});
+  }
+  return admin.firestore().collection("requests").add({
+    text: data.text,
+    upvotes: 0,
+  });
 });
 
 // upvote callable function
@@ -50,15 +50,15 @@ exports.upvote = functions.https.onCall((data, context) => {
   // check upvote list
   const userRef = admin.firestore().collection("users").doc(context.auth.uid);
   const requestRef = admin.firestore().collection("requests").doc(data.id);
+
   return userRef.get().then(doc => {
     // check user hasn't already upvoted the request
-    if(doc.data().upvotedOn.includes(data.id)) {
+    if (doc.data().upvotedOn.includes(data.id)) {
       throw new functions.https.HttpsError(
         "failed-precondition",
         "you can only something once"
       );
-    } 
-
+    }
     // upvote user array
     return userRef.update({
       //upvotedOn: admin.firestore.FieldValue.arrayUnion(data.id)
@@ -69,8 +69,6 @@ exports.upvote = functions.https.onCall((data, context) => {
       return requestRef.update({
         upvotes: admin.firestore.FieldValue.increment(1)
       });
-    })
-    
+    });
   });
-  
 });
