@@ -56,7 +56,7 @@ exports.upvote = functions.https.onCall((data, context) => {
     if (doc.data().upvotedOn.includes(data.id)) {
       throw new functions.https.HttpsError(
         "failed-precondition",
-        "you can only something once"
+        "you can only upvote something once"
       );
     }
     // upvote user array

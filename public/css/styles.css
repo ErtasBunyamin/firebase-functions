@@ -147,3 +147,27 @@ button:hover {
 .auth .modal.active {
     display: block;
 }
+
+/* Notification */
+.notification {
+    width: 200px;
+    padding: 20px;
+    position: fixed;
+    text-align: center;
+    border-radius: 0px 0px 5px 5px;
+    box-shadow:3px 2px 6px 0px rgb(56 3 3 / 48%);
+    color: #fff;
+    background-color: #ec2d2d;
+    
+    left: 0px;
+    right: 0px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: -100%;
+
+    transition: all 0.4s;
+}
+
+.notification.active{
+    margin-top: 0px;
+}

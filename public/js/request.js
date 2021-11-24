@@ -1,5 +1,3 @@
-
-
 // i will change this section 
 // because we need get data by a firebase function for security
 var request = new Vue({
@@ -8,13 +6,12 @@ var request = new Vue({
       requests: []
     },
     methods: {
-        upvoteRequest: function (id) {
+        upvoteRequest(id) {
             const upvote = firebase.functions().httpsCallable('upvote');
-            upvote({ 
-                id: id })
-            .cath(error => {
-                    console.log(error.message);
-            });
+            upvote({ id })
+                .catch(error => {
+                    showNotification(error.message);
+                });
         }
     },
     mounted () {
